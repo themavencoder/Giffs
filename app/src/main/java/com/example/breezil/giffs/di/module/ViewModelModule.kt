@@ -1,4 +1,4 @@
-package com.example.breezil.giffs.di
+package com.example.breezil.giffs.di.module
 
 
 import androidx.lifecycle.ViewModel

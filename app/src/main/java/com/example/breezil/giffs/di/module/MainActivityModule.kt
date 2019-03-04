@@ -1,4 +1,4 @@
-package com.example.breezil.giffs.di
+package com.example.breezil.giffs.di.module
 
 import com.example.breezil.giffs.ui.MainActivity
 import dagger.Module

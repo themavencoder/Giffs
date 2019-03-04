@@ -30,9 +30,18 @@ class PreferenceActivity : AppCompatActivity() {
         binding.bottomNavViewBar.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
 
-                R.id.trending ->startActivity(Intent (this@PreferenceActivity, MainActivity::class.java))
-                R.id.search -> startActivity(Intent(this@PreferenceActivity, SearchActivity::class.java))
-                R.id.saved -> startActivity(Intent(this@PreferenceActivity, SavedActivity::class.java))
+                R.id.trending -> {
+                    startActivity(Intent (this@PreferenceActivity, MainActivity::class.java))
+                    finish()
+                }
+                R.id.search -> {
+                    startActivity(Intent(this@PreferenceActivity, SearchActivity::class.java))
+                    finish()
+                }
+                R.id.saved -> {
+                    startActivity(Intent(this@PreferenceActivity, SavedActivity::class.java))
+                    finish()
+                }
                 R.id.preference -> {}
             }
 

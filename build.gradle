@@ -7,6 +7,14 @@ buildscript {
     ext.kodein_version = '5.2.0'
     ext.lifecycle_version = '2.0.0'
     ext.retrofit_version = '2.4.0'
+    ext.okhttp_version = '3.12.0'
+    ext.dagger_version = '2.16'
+    ext.rxjava = '2.2.2'
+    ext.rxandroid = '2.1.0'
+    ext.rxjava_adapter = '2.4.0'
+    ext.timber_version = '4.7.1'
+    ext.paging_version = '1.0.1'
+
     repositories {
         google()
         jcenter()

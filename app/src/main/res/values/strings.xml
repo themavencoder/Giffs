@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Giffs</string>
+
+    <string name="cookie">Cookie</string>
+    <string name="authorization">Authorization</string>
+    <string name="okhttp">OkHttp</string>
 </resources>

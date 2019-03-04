@@ -21,8 +21,13 @@ android {
         buildConfigField("String", "API_KEY", API_KEY)
         buildConfigField("String", "BASE_URL", BASE_URL)
         buildConfigField("String", "START_GIF", START_GIF)
-        buildConfigField("String", "END_GIF", END_GIF)
+        buildConfigField("String", "PREVIEW_END_100_GIF", PREVIEW_END_100_GIF)
         buildConfigField("String", "PREVIEW_END_GIF", PREVIEW_END_GIF)
+        buildConfigField("String", "END_GIF_200", END_GIF_200)
+        buildConfigField("String", "END_GIF_W200", END_GIF_W200)
+        buildConfigField("String", "END_GIF_D200", END_GIF_D200)
+        buildConfigField("String", "END_GIF", END_GIF)
+
     }
     buildTypes {
         release {
@@ -61,12 +66,16 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     //Dagger
-    implementation 'com.google.dagger:dagger:2.16'
-    implementation 'com.google.dagger:dagger-android:2.16'
-    implementation 'com.google.dagger:dagger-android-support:2.16'
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    kapt 'com.google.dagger:dagger-android-processor:2.16'
-    kapt 'com.google.dagger:dagger-compiler:2.16'
+
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxjava_adapter"
 
     //databinding
     kapt 'com.android.databinding:compiler:3.1.4'
@@ -88,6 +97,14 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    //Paging Library
+    implementation "android.arch.paging:runtime:$paging_version"
 
     // Kodein
     implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"

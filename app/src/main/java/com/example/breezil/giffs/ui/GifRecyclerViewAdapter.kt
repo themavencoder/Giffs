@@ -38,9 +38,7 @@ class GifRecyclerViewAdapter(internal var context: Context, internal var gifClic
         fun bind(gif: Gif, listener: GifClickListener) {
             itemView.setOnClickListener { v -> gifClickListener.clickGif(gif) }
 
-//            binding.gifId.text = gif.id
-
-            val gif_image : String = START_GIF + gif.id + END_GIF
+            val gif_image : String = START_GIF + gif.id + END_GIF_200
 
 
 
@@ -57,8 +55,6 @@ class GifRecyclerViewAdapter(internal var context: Context, internal var gifClic
                         .error(R.drawable.placeholder)
                 )
                 .into(binding.gifImage)
-
-
 
         }
     }

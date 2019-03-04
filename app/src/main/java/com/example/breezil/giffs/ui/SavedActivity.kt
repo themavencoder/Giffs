@@ -30,10 +30,19 @@ class SavedActivity : AppCompatActivity() {
         binding.bottomNavViewBar.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
 
-                R.id.trending ->startActivity(Intent (this@SavedActivity, MainActivity::class.java))
-                R.id.search -> startActivity(Intent(this@SavedActivity, SearchActivity::class.java))
+                R.id.trending -> {
+                    startActivity(Intent (this@SavedActivity, MainActivity::class.java))
+                    finish()
+                }
+                R.id.search -> {
+                    startActivity(Intent(this@SavedActivity, SearchActivity::class.java))
+                    finish()
+                }
                 R.id.saved -> {}
-                R.id.preference -> startActivity(Intent(this@SavedActivity, PreferenceActivity::class.java))
+                R.id.preference -> {
+                    startActivity(Intent(this@SavedActivity, PreferenceActivity::class.java))
+                    finish()
+                }
             }
 
 

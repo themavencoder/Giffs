@@ -18,6 +18,8 @@ import com.example.breezil.giffs.databinding.ActivityMainBinding
 import com.example.breezil.giffs.utils.BottomNavigationHelper
 import com.example.breezil.giffs.view_model.MainViewModel
 import dagger.android.AndroidInjection
+import okhttp3.logging.HttpLoggingInterceptor
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -47,6 +49,10 @@ class MainActivity : AppCompatActivity() {
 
         setUpAdapter()
         setUpViewModel()
+
+        val logging = HttpLoggingInterceptor { message -> Timber.tag(getString(R.string.okhttp)).d(message) }
+        logging.redactHeader(getString(R.string.authorization))
+        logging.redactHeader(getString(R.string.cookie))
 
 
 
@@ -92,9 +98,18 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.trending -> {
                 }
-                R.id.search -> startActivity(Intent(this@MainActivity, SearchActivity::class.java))
-                R.id.saved -> startActivity(Intent(this@MainActivity, SavedActivity::class.java))
-                R.id.preference -> startActivity(Intent(this@MainActivity, PreferenceActivity::class.java))
+                R.id.search -> {
+                    startActivity(Intent(this@MainActivity, SearchActivity::class.java))
+                    finish()
+                }
+                R.id.saved -> {
+                    startActivity(Intent(this@MainActivity, SavedActivity::class.java))
+                    finish()
+                }
+                R.id.preference -> {
+                    startActivity(Intent(this@MainActivity, PreferenceActivity::class.java))
+                    finish()
+                }
             }
 
 

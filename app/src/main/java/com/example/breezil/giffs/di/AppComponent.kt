@@ -3,6 +3,8 @@ package com.example.breezil.giffs.di
 
 import android.app.Application
 import com.example.breezil.giffs.GiffsApp
+import com.example.breezil.giffs.di.module.AppModule
+import com.example.breezil.giffs.di.module.MainActivityModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
