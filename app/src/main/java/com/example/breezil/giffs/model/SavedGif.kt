@@ -36,7 +36,7 @@ data class SavedGif(
 //    constructor(score: Double, bitlyGifUrl: String, bitlyUrl: String, contentUrl: String, embedUrl: String,
 //                id: String, importDatetime: String, isSticker: Int, rating: String, slug: String, source: String,
 //                sourcePostUrl: String, sourceTld: String, title: String, trendingDatetime: String,
-//                type: String, url: String, username: String ) : this()
+//                type: String, url: String, username: String ) : this().
 }
 
 
