@@ -16,4 +16,4 @@ class GifDataSourceFactory(
         return source
     }
 
-}
+}      

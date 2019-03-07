@@ -1,4 +1,4 @@
-package com.example.breezil.giffs.ui
+package com.example.breezil.giffs.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,39 +6,38 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.breezil.giffs.BuildConfig.*
+import com.example.breezil.giffs.BuildConfig
 import com.example.breezil.giffs.R
-import com.example.breezil.giffs.model.Gif
-import com.example.breezil.giffs.callbacks.GifClickListener
+import com.example.breezil.giffs.callbacks.SavedGifClickListener
 import com.example.breezil.giffs.databinding.GifItemBinding
 import com.example.breezil.giffs.glide.GlideApp
+import com.example.breezil.giffs.model.SavedGif
 
-class GifRecyclerViewAdapter(internal var context: Context, internal var gifClickListener: GifClickListener) :
-    ListAdapter<Gif, GifRecyclerViewAdapter.GiffHolder>(DIFF_CALLBACK) {
-    internal var gif: Gif? = null
+class SavedGifRecyclerAdapter(internal var context: Context, internal var savedGifClickListener: SavedGifClickListener) :
+    ListAdapter<SavedGif, SavedGifRecyclerAdapter.SavedGiffHolder>(DIFF_CALLBACK) {
+    internal var gif: SavedGif? = null
     internal lateinit var binding: GifItemBinding
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GiffHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedGiffHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         binding = GifItemBinding.inflate(layoutInflater, parent, false)
 
 
-        return GiffHolder(binding)
+        return SavedGiffHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: GiffHolder, position: Int) {
+    override fun onBindViewHolder(holder: SavedGiffHolder, position: Int) {
         val gif = getItem(position)
-        holder.bind(gif, gifClickListener)
+        holder.bind(gif, savedGifClickListener)
     }
 
-    inner class GiffHolder(var binding: GifItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SavedGiffHolder(var binding: GifItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(gif: Gif, listener: GifClickListener) {
-            itemView.setOnClickListener { v -> gifClickListener.clickGif(gif) }
+        fun bind(savedGif: SavedGif, listener: SavedGifClickListener) {
+            itemView.setOnClickListener { v -> savedGifClickListener.clickGif(savedGif) }
 
-            val gif_image : String = START_GIF + gif.id + END_GIF_200
+            val gif_image : String = BuildConfig.START_GIF + gif!!.id + BuildConfig.END_GIF_200
 
 
 
@@ -61,12 +60,12 @@ class GifRecyclerViewAdapter(internal var context: Context, internal var gifClic
 
     companion object {
 
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Gif>() {
-            override fun areItemsTheSame(oldItem: Gif, newItem: Gif): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SavedGif>() {
+            override fun areItemsTheSame(oldItem: SavedGif, newItem: SavedGif): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Gif, newItem: Gif): Boolean {
+            override fun areContentsTheSame(oldItem: SavedGif, newItem: SavedGif): Boolean {
                 return (oldItem.id == newItem.id
                         && oldItem.title == newItem.title
                         && oldItem.slug == newItem.slug)

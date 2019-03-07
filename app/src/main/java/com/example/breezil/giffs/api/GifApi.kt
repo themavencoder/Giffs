@@ -21,6 +21,18 @@ interface GifApi {
                     @Query("offset") offset: Int )
             : Call<GifResult>
 
+    @GET("/v1/gifs/search")
+    fun getSearch(@Query("api_key") apikey: String,
+                  @Query("q") q : String,
+                  @Query("limit") limit:Int
+                  ) : Call<GifResult>
+
+    @GET("/v1/gifs/search")
+    fun getSearchAfter(@Query("api_key") apikey: String,
+                  @Query("q") q : String,
+                  @Query("limit") limit:Int,
+                  @Query("offset") offset: Int
+                    ) : Call<GifResult>
 
 
 }

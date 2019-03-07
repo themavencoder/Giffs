@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName
 data class Gif(
     @SerializedName("_score")
     val score: Double,
-
     @SerializedName("bitly_gif_url")
     val bitlyGifUrl: String,
     @SerializedName("bitly_url")
@@ -18,7 +17,6 @@ data class Gif(
     val embedUrl: String,
     @SerializedName("id")
     val id: String,
-
     @SerializedName("import_datetime")
     val importDatetime: String,
     @SerializedName("is_sticker")

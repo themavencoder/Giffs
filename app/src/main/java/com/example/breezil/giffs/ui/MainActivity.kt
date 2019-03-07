@@ -3,18 +3,16 @@ package com.example.breezil.giffs.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.breezil.giffs.BuildConfig.API_KEY
-import com.example.breezil.giffs.GiffsApp
 import com.example.breezil.giffs.model.Gif
-import com.example.breezil.giffs.api.GifApi
 import com.example.breezil.giffs.callbacks.GifClickListener
 import com.example.breezil.giffs.R
 import com.example.breezil.giffs.databinding.ActivityMainBinding
+import com.example.breezil.giffs.ui.adapter.GifRecyclerViewAdapter
 import com.example.breezil.giffs.utils.BottomNavigationHelper
 import com.example.breezil.giffs.view_model.MainViewModel
 import dagger.android.AndroidInjection
@@ -26,25 +24,24 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
 
-    internal var gifAdapter: GifRecyclerViewAdapter ? = null
+    internal var gifAdapter: GifRecyclerViewAdapter? = null
 
     lateinit var viewModel : MainViewModel
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    internal var actionBottomSheetFragment = ActionBottomSheetFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        binding =DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         AndroidInjection.inject(this)
 
         setUpBottomNavigation()
 
         binding.mainGifList.setHasFixedSize(true)
-
 
 
         setUpAdapter()
@@ -55,18 +52,14 @@ class MainActivity : AppCompatActivity() {
         logging.redactHeader(getString(R.string.cookie))
 
 
-
-
-
     }
     private fun setUpAdapter(){
 
         val gifClickListener = object : GifClickListener {
             override fun clickGif(gif: Gif) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
+                actionBottomSheetFragment.getGif(gif).show(supportFragmentManager, "choose")
+//                actionBottomSheetFragment.show(supportFragmentManager, "choose")
             }
-
         }
         gifAdapter = GifRecyclerViewAdapter(this, gifClickListener)
         binding.mainGifList.adapter = gifAdapter

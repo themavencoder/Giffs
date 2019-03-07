@@ -29,6 +29,9 @@ android {
         buildConfigField("String", "END_GIF", END_GIF)
 
     }
+    androidExtensions {
+        experimental = true
+    }
     buildTypes {
         release {
             minifyEnabled false

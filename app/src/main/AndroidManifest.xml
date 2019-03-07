@@ -21,7 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SearchActivity"/>
+        <activity android:name=".ui.SearchActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:windowSoftInputMode="adjustPan"
+        />
 
         <activity android:name=".ui.SavedActivity"/>
 
