@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         val gifClickListener = object : GifClickListener {
             override fun clickGif(gif: Gif) {
                 actionBottomSheetFragment.getGif(gif).show(supportFragmentManager, "choose")
-//                actionBottomSheetFragment.show(supportFragmentManager, "choose")
             }
         }
         gifAdapter = GifRecyclerViewAdapter(this, gifClickListener)

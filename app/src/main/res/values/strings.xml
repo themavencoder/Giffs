@@ -8,4 +8,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Are_you_sure_you_want_to_delete_this_image">Are you sure you want to delete this gif?</string>
+    <string name="yes">Yes</string>
+    <string name="gif_deleted">Gif Deleted</string>
+    <string name="no">No</string>
+    <string name="delete_gif">Delete Gif</string>
+    <string name="share_image_">share_image_</string>
+    <string name="gif">.gif</string>
+    <string name="downloading">Downloading</string>
+    <string name="please_wait_gif_is_downloading">Please wait gif is downloading</string>
+    <string name="downloaded">Downloaded</string>
+    <string name="date_format">yyyyMMdd_HHmmss</string>
+    <string name="_slash_pixxo">/Giffs</string>
 </resources>

@@ -30,6 +30,7 @@ class SearchActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    internal var actionBottomSheetFragment = ActionBottomSheetFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +58,7 @@ class SearchActivity : AppCompatActivity() {
 
         val gifClickListener = object : GifClickListener {
             override fun clickGif(gif: Gif) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
+                actionBottomSheetFragment.getGif(gif).show(supportFragmentManager, "choose")
             }
 
         }

@@ -28,8 +28,8 @@ class SavedGifRecyclerAdapter(internal var context: Context, internal var savedG
     }
 
     override fun onBindViewHolder(holder: SavedGiffHolder, position: Int) {
-        val gif = getItem(position)
-        holder.bind(gif, savedGifClickListener)
+        val savedGif = getItem(position)
+        holder.bind(savedGif, savedGifClickListener)
     }
 
     inner class SavedGiffHolder(var binding: GifItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -37,7 +37,7 @@ class SavedGifRecyclerAdapter(internal var context: Context, internal var savedG
         fun bind(savedGif: SavedGif, listener: SavedGifClickListener) {
             itemView.setOnClickListener { v -> savedGifClickListener.clickGif(savedGif) }
 
-            val gif_image : String = BuildConfig.START_GIF + gif!!.id + BuildConfig.END_GIF_200
+            val gif_image : String = BuildConfig.START_GIF + savedGif.id + BuildConfig.END_GIF_200
 
 
 

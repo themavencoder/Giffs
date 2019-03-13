@@ -48,7 +48,6 @@ class SavedActivity : AppCompatActivity() {
         val savedGifClickListener = object : SavedGifClickListener {
             override fun clickGif(savedGif: SavedGif) {
                 savedActionBottomSheetFragment.getSavedGif(savedGif).show(supportFragmentManager, "choose")
-//                actionBottomSheetFragment.show(supportFragmentManager, "choose")
             }
         }
         gifAdapter = SavedGifRecyclerAdapter(this, savedGifClickListener)
@@ -60,7 +59,6 @@ class SavedActivity : AppCompatActivity() {
         savedViewModel = ViewModelProviders.of(this).get(SavedViewModel::class.java)
         savedViewModel.savedList.observe(this, Observer { savedGif ->
             gifAdapter?.submitList(savedGif)
-            Toast.makeText(this, savedGif.size.toString() ,Toast.LENGTH_SHORT).show()
         })
     }
 
