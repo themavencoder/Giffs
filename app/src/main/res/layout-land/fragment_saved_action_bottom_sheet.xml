@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+            android:id="@+id/actionBottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+            android:orientation="vertical"
+            android:padding="20dp"
+            tools:context=".ui.bottom_sheet.SavedActionBottomSheetFragment"
+
+    >
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:drawableStart="@mipmap/ic_shared"
+                  android:text="Share"
+                  android:textAlignment="center"
+                  android:drawablePadding="30dp"
+                  android:textColor="@color/colorPrimary"
+                  android:paddingTop="20dp"
+                  android:gravity="center_vertical"
+                  android:layout_marginStart="20dp"
+                  android:layout_marginEnd="20dp"
+                  android:textSize="20sp"
+                  android:layout_weight="2"
+                  android:id="@+id/shareGif"
+        />
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:drawableStart="@mipmap/ic_download"
+                  android:text="Download"
+                  android:textAlignment="center"
+                  android:drawablePadding="30dp"
+                  android:textColor="@color/colorPrimary"
+                  android:paddingTop="20dp"
+                  android:gravity="center"
+                  android:layout_marginStart="20dp"
+                  android:layout_marginEnd="20dp"
+                  android:textSize="20sp"
+                  android:layout_weight="2"
+                  android:id="@+id/downloadGif"
+        />
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:drawableStart="@mipmap/ic_delete"
+                  android:text="Delete"
+                  android:textAlignment="center"
+                  android:drawablePadding="30dp"
+                  android:textColor="@color/darkRed"
+                  android:paddingTop="20dp"
+                  android:gravity="center"
+                  android:layout_marginStart="20dp"
+                  android:layout_marginEnd="20dp"
+                  android:textSize="20sp"
+                  android:layout_weight="2"
+                  android:id="@+id/deleteGif"
+        />
+
+
+    </LinearLayout>
+
+</layout>
+
