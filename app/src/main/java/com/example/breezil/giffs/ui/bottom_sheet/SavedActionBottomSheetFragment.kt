@@ -1,9 +1,8 @@
-package com.example.breezil.giffs.ui
+package com.example.breezil.giffs.ui.bottom_sheet
 
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,9 +16,8 @@ import com.example.breezil.giffs.BuildConfig
 import com.example.breezil.giffs.R
 import com.example.breezil.giffs.databinding.FragmentSavedActionBottomSheetBinding
 import com.example.breezil.giffs.model.SavedGif
-import com.example.breezil.giffs.utils.Constant
 import com.example.breezil.giffs.utils.Constant.Companion.GIF
-import com.example.breezil.giffs.view_model.SavedViewModel
+import com.example.breezil.giffs.ui.saved.SavedViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 // TODO: Rename parameter arguments, choose names that match

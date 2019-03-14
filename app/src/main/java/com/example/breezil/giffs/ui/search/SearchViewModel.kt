@@ -1,4 +1,4 @@
-package com.example.breezil.giffs.view_model
+package com.example.breezil.giffs.ui.search
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

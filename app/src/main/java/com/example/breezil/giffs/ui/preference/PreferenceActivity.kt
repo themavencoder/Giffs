@@ -1,4 +1,4 @@
-package com.example.breezil.giffs.ui
+package com.example.breezil.giffs.ui.preference
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,9 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.breezil.giffs.R
 import com.example.breezil.giffs.databinding.ActivityPreferenceAcivityBinding
+import com.example.breezil.giffs.ui.saved.SavedActivity
+import com.example.breezil.giffs.ui.search.SearchActivity
+import com.example.breezil.giffs.ui.trending.MainActivity
 import com.example.breezil.giffs.utils.BottomNavigationHelper
 
 class PreferenceActivity : AppCompatActivity() {

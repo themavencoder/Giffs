@@ -13,11 +13,11 @@
     <string name="gif_deleted">Gif Deleted</string>
     <string name="no">No</string>
     <string name="delete_gif">Delete Gif</string>
-    <string name="share_image_">share_image_</string>
+    <string name="share_gif_">share_gif_</string>
     <string name="gif">.gif</string>
     <string name="downloading">Downloading</string>
     <string name="please_wait_gif_is_downloading">Please wait gif is downloading</string>
     <string name="downloaded">Downloaded</string>
     <string name="date_format">yyyyMMdd_HHmmss</string>
-    <string name="_slash_pixxo">/Giffs</string>
+    <string name="_slash_giffs">/Giffs</string>
 </resources>

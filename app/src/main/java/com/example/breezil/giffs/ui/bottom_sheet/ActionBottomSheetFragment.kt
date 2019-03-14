@@ -1,10 +1,10 @@
-package com.example.breezil.giffs.ui
+package com.example.breezil.giffs.ui.bottom_sheet
 
 
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.load.DataSource
@@ -29,8 +30,9 @@ import com.example.breezil.giffs.databinding.FragmentActionBottomSheetBinding
 import com.example.breezil.giffs.glide.GlideApp
 import com.example.breezil.giffs.model.Gif
 import com.example.breezil.giffs.model.SavedGif
+import com.example.breezil.giffs.ui.GifUtils
 import com.example.breezil.giffs.utils.Constant.Companion.GIF
-import com.example.breezil.giffs.view_model.SavedViewModel
+import com.example.breezil.giffs.ui.saved.SavedViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -50,8 +52,11 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
 
     lateinit var binding: FragmentActionBottomSheetBinding
     private var mContext: Context? = null
+    internal lateinit var gifUtils: GifUtils
+
     internal lateinit var mProgress: ProgressDialog
 
+    lateinit var drawable : Drawable
 
     fun getGif(gif: Gif): ActionBottomSheetFragment {
         val fragment = ActionBottomSheetFragment()
@@ -69,6 +74,7 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_action_bottom_sheet, container, false)
         this.mContext = activity
+        gifUtils = GifUtils(mContext!!)
         mProgress = ProgressDialog(mContext)
         updateUI(this!!.getGif()!!)
         return binding.root
@@ -79,7 +85,7 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
 
         val gif_image : String = BuildConfig.START_GIF + gif.id + BuildConfig.END_GIF_200
 
-        binding.saveGif.setOnClickListener { v ->
+        binding.saveGif.setOnClickListener {
             val savedViewModel = ViewModelProviders.of(this)
                 .get(SavedViewModel::class.java)
 
@@ -123,7 +129,8 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
 
         }
 
-        binding.shareGif.setOnClickListener { v ->
+
+        binding.shareGif.setOnClickListener {
             GlideApp.with(activity!!)
                 .asGif()
                 .load(gif_image)
@@ -139,13 +146,14 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
                     }
 
                     override fun onResourceReady(
-                        resource: GifDrawable?,
+                        resource: GifDrawable,
                         model: Any?,
                         target: Target<GifDrawable>?,
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        startSharing(getLocalBitmapUri(resource,this@ActionBottomSheetFragment.mContext))
+//                        startSharing(getLocalDrawableUri(this@ActionBottomSheetFragment.mContext!!,resource))
+                        startSharing(gifUtils.getLocalDrawableUri(this@ActionBottomSheetFragment.mContext!!,resource))
                         return true
                     }
 
@@ -169,7 +177,7 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
                     }
 
                     override fun onResourceReady(
-                        resource: GifDrawable?,
+                        resource: GifDrawable,
                         model: Any?,
                         target: Target<GifDrawable>?,
                         dataSource: DataSource?,
@@ -181,7 +189,7 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
                         mProgress.show()
                         val handler = Handler()
                         handler.postDelayed({
-//                            startDownloading(this@ActionBottomSheetFragment.mContext!!, resource)
+                           startDownloading(this@ActionBottomSheetFragment.mContext!!, resource)
                             mProgress.dismiss()
                             Toast.makeText(
                                 this@ActionBottomSheetFragment.mContext,
@@ -199,11 +207,37 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
 
+    fun getLocalDrawableUri(context: Context, gifDrawable: GifDrawable): Uri {
+        var bmpUri: Uri? = null
+        val file = File(
+            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            (context.getString(R.string.share_gif_) +
+                System.currentTimeMillis() + context.getString(R.string.gif)))
+        val out: FileOutputStream?
+        try { out = FileOutputStream(file)
+            val byteBuffer = gifDrawable.buffer
+            val arr = ByteArray(byteBuffer.remaining())
+            byteBuffer.rewind()
+            byteBuffer.get(arr)
+            out.write(arr)
+            try {
+                out.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            bmpUri = FileProvider.getUriForFile(context, context.applicationContext .packageName + ".provider", file)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return bmpUri!!
+    }
+
+
     private fun startSharing(localBitmapUri: Uri) {
         val activity = activity
         if (activity != null && isAdded) {
             val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "image/gif"
+            shareIntent.type = "image/*"
             shareIntent.putExtra(Intent.EXTRA_STREAM, localBitmapUri)
             startActivity(Intent.createChooser(shareIntent, "share"))
 
@@ -223,39 +257,18 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    fun getLocalBitmapUri(gif: GifDrawable?, context: Context?): Uri {
-        var bmpUri: Uri? = null
-        try
-        {
-            val file = File(
-                context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                (context!!.getString(R.string.share_image_) +
-                        System.currentTimeMillis() + context.getString(R.string.gif)))
-            val out = FileOutputStream(file)
-            if (gif != null) {
-                gif.firstFrame.compress(Bitmap.CompressFormat.PNG, 100, out)
-            }
-            out.flush()
-            out.close()
-            bmpUri = Uri.fromFile(file)
-        }
-        catch (e:IOException) {
-            e.printStackTrace()
-        }
-        return bmpUri!!
-    }
 
-    fun startDownloading(context: Context, image: Bitmap): String? {
+    fun startDownloading(context: Context, gifDrawable: GifDrawable): String? {
         var savedImagePath: String? = null
         // Create the new file in the external storage
         val timeStamp = SimpleDateFormat(
             context.getString(R.string.date_format),
             Locale.getDefault()
         ).format(Date())
-        val imageFileName = context.getString(R.string.app_name) + timeStamp + context.getString(R.string.gif)
+        val gifFileName = context.getString(R.string.app_name) + timeStamp + context.getString(R.string.gif)
         val storageDir = File(
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + context.getString(
-                R.string._slash_pixxo
+                R.string._slash_giffs
             )
         )
         var success = true
@@ -263,17 +276,25 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
             success = storageDir.mkdirs()
         }
 
+
+
         // Save the new Bitmap
         if (success) {
-            val imageFile = File(storageDir, imageFileName)
+
+            val imageFile = File(storageDir, gifFileName)
             savedImagePath = imageFile.absolutePath
             try {
                 val fileOut = FileOutputStream(imageFile)
-                image.compress(Bitmap.CompressFormat.JPEG, 100, fileOut)
+                val byteBuffer = gifDrawable.buffer
+                val arr = ByteArray(byteBuffer.remaining())
+                byteBuffer.rewind()
+                byteBuffer.get(arr)
+                fileOut.write(arr)
                 fileOut.close()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+
 
             // Add the image to the system gallery
             galleryAddPic(context, savedImagePath)
@@ -290,6 +311,18 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
         mediaScanIntent.data = contentUri
         context.sendBroadcast(mediaScanIntent)
     }
+
+
+//    fun getDrawable(){
+//        val byteBuffer = (drawable as GifDrawable).buffer
+//        val gifFile = File(localDirectory, "test.gif")
+//
+//        val output = FileOutputStream(gifFile)
+//        val bytes = ByteArray(byteBuffer.capacity())
+//        (byteBuffer.duplicate().clear() as ByteBuffer).get(bytes)
+//        output.write(bytes, 0 ,bytes.size)
+//        output.close()
+//    }
 
 
 

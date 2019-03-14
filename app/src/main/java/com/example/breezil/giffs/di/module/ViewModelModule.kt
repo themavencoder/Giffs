@@ -3,9 +3,8 @@ package com.example.breezil.giffs.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.breezil.giffs.view_model.MainViewModel
-import com.example.breezil.giffs.view_model.SavedViewModel
-import com.example.breezil.giffs.view_model.SearchViewModel
+import com.example.breezil.giffs.ui.trending.MainViewModel
+import com.example.breezil.giffs.ui.search.SearchViewModel
 import com.example.breezil.giffs.view_model.ViewModelFactory
 import dagger.Binds
 import dagger.Module

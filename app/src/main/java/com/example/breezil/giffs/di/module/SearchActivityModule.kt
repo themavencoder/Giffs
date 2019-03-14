@@ -1,6 +1,6 @@
 package com.example.breezil.giffs.di.module
 
-import com.example.breezil.giffs.ui.SearchActivity
+import com.example.breezil.giffs.ui.search.SearchActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

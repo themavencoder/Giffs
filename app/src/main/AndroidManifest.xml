@@ -17,21 +17,31 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.trending.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SearchActivity"
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
+        </provider>
+        <activity android:name=".ui.search.SearchActivity"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:windowSoftInputMode="adjustPan"
         />
 
-        <activity android:name=".ui.SavedActivity"/>
+        <activity android:name=".ui.saved.SavedActivity"/>
 
-        <activity android:name=".ui.PreferenceActivity"/>
+        <activity android:name=".ui.preference.PreferenceActivity"/>
 
     </application>
 

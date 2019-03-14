@@ -1,9 +1,8 @@
-package com.example.breezil.giffs.ui
+package com.example.breezil.giffs.ui.saved
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,9 +11,12 @@ import com.example.breezil.giffs.R
 import com.example.breezil.giffs.callbacks.SavedGifClickListener
 import com.example.breezil.giffs.databinding.ActivitySavedBinding
 import com.example.breezil.giffs.model.SavedGif
+import com.example.breezil.giffs.ui.preference.PreferenceActivity
+import com.example.breezil.giffs.ui.bottom_sheet.SavedActionBottomSheetFragment
+import com.example.breezil.giffs.ui.search.SearchActivity
 import com.example.breezil.giffs.ui.adapter.SavedGifRecyclerAdapter
+import com.example.breezil.giffs.ui.trending.MainActivity
 import com.example.breezil.giffs.utils.BottomNavigationHelper
-import com.example.breezil.giffs.view_model.SavedViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -29,7 +31,8 @@ class SavedActivity : AppCompatActivity() {
 
     internal var gifAdapter: SavedGifRecyclerAdapter? = null
 
-    internal var savedActionBottomSheetFragment = SavedActionBottomSheetFragment()
+    internal var savedActionBottomSheetFragment =
+        SavedActionBottomSheetFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
