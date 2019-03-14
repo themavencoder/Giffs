@@ -17,7 +17,7 @@ class GifUtils (context: Context){
 
 
 
-    private fun galleryAddPic(context: Context, imagePath: String) {
+    private fun galleryAddGif(context: Context, imagePath: String) {
         val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
         val f = File(imagePath)
         val contentUri = Uri.fromFile(f)
@@ -64,7 +64,7 @@ class GifUtils (context: Context){
 
 
             // Add the image to the system gallery
-            galleryAddPic(context, savedImagePath)
+            galleryAddGif(context, savedImagePath)
 
         }
 

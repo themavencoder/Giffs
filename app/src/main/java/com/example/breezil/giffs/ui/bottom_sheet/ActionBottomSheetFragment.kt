@@ -1,9 +1,12 @@
 package com.example.breezil.giffs.ui.bottom_sheet
 
 
+import android.Manifest
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +17,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -33,6 +38,7 @@ import com.example.breezil.giffs.model.SavedGif
 import com.example.breezil.giffs.ui.GifUtils
 import com.example.breezil.giffs.utils.Constant.Companion.GIF
 import com.example.breezil.giffs.ui.saved.SavedViewModel
+import com.example.breezil.giffs.utils.Constant.Companion.STORAGE_PERMISSION_CODE
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -152,8 +158,18 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-//                        startSharing(getLocalDrawableUri(this@ActionBottomSheetFragment.mContext!!,resource))
-                        startSharing(gifUtils.getLocalDrawableUri(this@ActionBottomSheetFragment.mContext!!,resource))
+                        if (ContextCompat.checkSelfPermission(
+                                this@ActionBottomSheetFragment.mContext!!,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            ) == PackageManager.PERMISSION_GRANTED){
+                            startSharing(gifUtils.getLocalDrawableUri(this@ActionBottomSheetFragment.mContext!!,resource))
+
+                        }else{
+                            ActivityCompat.requestPermissions(
+                                this@ActionBottomSheetFragment.mContext as Activity,
+                                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE
+                            )
+                        }
                         return true
                     }
 
@@ -183,20 +199,33 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        mProgress.setTitle(mContext!!.getString(R.string.downloading))
-                        mProgress.setMessage(mContext!!.getString(R.string.please_wait_gif_is_downloading))
-                        mProgress.setCancelable(false)
-                        mProgress.show()
-                        val handler = Handler()
-                        handler.postDelayed({
-                           startDownloading(this@ActionBottomSheetFragment.mContext!!, resource)
-                            mProgress.dismiss()
-                            Toast.makeText(
-                                this@ActionBottomSheetFragment.mContext,
-                                R.string.downloaded,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }, 1000)
+                        if (ContextCompat.checkSelfPermission(
+                                this@ActionBottomSheetFragment.mContext!!,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            mProgress.setTitle(mContext!!.getString(R.string.downloading))
+                            mProgress.setMessage(mContext!!.getString(R.string.please_wait_gif_is_downloading))
+                            mProgress.setCancelable(false)
+                            mProgress.show()
+                            val handler = Handler()
+                            handler.postDelayed({
+                                gifUtils.startDownloading(this@ActionBottomSheetFragment.mContext!!, resource)
+                                mProgress.dismiss()
+                                Toast.makeText(
+                                    this@ActionBottomSheetFragment.mContext,
+                                    R.string.downloaded,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }, 1000)
+                        }else{
+                            ActivityCompat.requestPermissions(
+                                this@ActionBottomSheetFragment.mContext as Activity,
+                                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE
+                            )
+
+                        }
+
                         return true
                     }
 
@@ -204,32 +233,6 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-    }
-
-
-    fun getLocalDrawableUri(context: Context, gifDrawable: GifDrawable): Uri {
-        var bmpUri: Uri? = null
-        val file = File(
-            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-            (context.getString(R.string.share_gif_) +
-                System.currentTimeMillis() + context.getString(R.string.gif)))
-        val out: FileOutputStream?
-        try { out = FileOutputStream(file)
-            val byteBuffer = gifDrawable.buffer
-            val arr = ByteArray(byteBuffer.remaining())
-            byteBuffer.rewind()
-            byteBuffer.get(arr)
-            out.write(arr)
-            try {
-                out.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            bmpUri = FileProvider.getUriForFile(context, context.applicationContext .packageName + ".provider", file)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return bmpUri!!
     }
 
 
@@ -258,71 +261,7 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
 
-    fun startDownloading(context: Context, gifDrawable: GifDrawable): String? {
-        var savedImagePath: String? = null
-        // Create the new file in the external storage
-        val timeStamp = SimpleDateFormat(
-            context.getString(R.string.date_format),
-            Locale.getDefault()
-        ).format(Date())
-        val gifFileName = context.getString(R.string.app_name) + timeStamp + context.getString(R.string.gif)
-        val storageDir = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + context.getString(
-                R.string._slash_giffs
-            )
-        )
-        var success = true
-        if (!storageDir.exists()) {
-            success = storageDir.mkdirs()
-        }
 
-
-
-        // Save the new Bitmap
-        if (success) {
-
-            val imageFile = File(storageDir, gifFileName)
-            savedImagePath = imageFile.absolutePath
-            try {
-                val fileOut = FileOutputStream(imageFile)
-                val byteBuffer = gifDrawable.buffer
-                val arr = ByteArray(byteBuffer.remaining())
-                byteBuffer.rewind()
-                byteBuffer.get(arr)
-                fileOut.write(arr)
-                fileOut.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-
-            // Add the image to the system gallery
-            galleryAddPic(context, savedImagePath)
-
-        }
-
-        return savedImagePath
-    }
-
-    private fun galleryAddPic(context: Context, gifPath: String) {
-        val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-        val f = File(gifPath)
-        val contentUri = Uri.fromFile(f)
-        mediaScanIntent.data = contentUri
-        context.sendBroadcast(mediaScanIntent)
-    }
-
-
-//    fun getDrawable(){
-//        val byteBuffer = (drawable as GifDrawable).buffer
-//        val gifFile = File(localDirectory, "test.gif")
-//
-//        val output = FileOutputStream(gifFile)
-//        val bytes = ByteArray(byteBuffer.capacity())
-//        (byteBuffer.duplicate().clear() as ByteBuffer).get(bytes)
-//        output.write(bytes, 0 ,bytes.size)
-//        output.close()
-//    }
 
 
 
