@@ -32,6 +32,7 @@ import com.example.breezil.giffs.databinding.FragmentSavedActionBottomSheetBindi
 import com.example.breezil.giffs.glide.GlideApp
 import com.example.breezil.giffs.model.SavedGif
 import com.example.breezil.giffs.ui.GifUtils
+import com.example.breezil.giffs.ui.saved.SavedActivity
 import com.example.breezil.giffs.utils.Constant.Companion.GIF
 import com.example.breezil.giffs.ui.saved.SavedViewModel
 import com.example.breezil.giffs.utils.Constant
@@ -204,6 +205,7 @@ class SavedActionBottomSheetFragment : BottomSheetDialogFragment() {
                 savedViewModel.delete(savedGif)
                 Toast.makeText(activity, R.string.gif_deleted, Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
+                restartActivity()
                 dismiss()
             }
             .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
@@ -220,5 +222,14 @@ class SavedActionBottomSheetFragment : BottomSheetDialogFragment() {
         } else {
             null
         }
+    }
+
+
+
+
+    fun restartActivity() {
+        val intent = Intent(activity, SavedActivity::class.java)
+        startActivity(intent)
+        activity!!.finish()
     }
 }

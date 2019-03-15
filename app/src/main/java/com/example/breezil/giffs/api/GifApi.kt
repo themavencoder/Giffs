@@ -15,10 +15,22 @@ interface GifApi {
                     @Query("limit") limit:Int)
     : Call<GifResult>
 
+
+
     @GET("/v1/gifs/trending")
     fun getTrendingAfter (@Query("api_key")apikey:String,
                     @Query("limit") limit:Int,
                     @Query("offset") offset: Int )
+            : Call<GifResult>
+
+    @GET("/v1/gifs/random")
+    fun getRandom(@Query("api_key")apikey:String,
+                    @Query("limit") limit:Int)
+            : Call<GifResult>
+    @GET("/v1/gifs/random")
+    fun getRandomAfter(@Query("api_key")apikey:String,
+                       @Query("limit") limit:Int,
+                       @Query("offset") offset: Int )
             : Call<GifResult>
 
     @GET("/v1/gifs/search")

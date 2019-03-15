@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         logging.redactHeader(getString(R.string.authorization))
         logging.redactHeader(getString(R.string.cookie))
 
-
+        supportActionBar!!.title = getString(R.string.trending)
     }
     private fun setUpAdapter(){
 

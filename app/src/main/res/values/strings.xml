@@ -20,4 +20,11 @@
     <string name="downloaded">Downloaded</string>
     <string name="date_format">yyyyMMdd_HHmmss</string>
     <string name="_slash_giffs">/Giffs</string>
+    <string name="are_you_sure_you_want_to_delete_all_saved">Are you sure you want to delete all saved</string>
+    <string name="no_gif_saved_in_collections_yet">No Gif saved in collections yet</string>
+    <string name="click_to_save_gif">Click to Save gif</string>
+    <string name="saved_list_emptied">Saved list emptied</string>
+    <string name="delete_all">Delete All</string>
+    <string name="trending">Trending</string>
+    <string name="saved">Saved</string>
 </resources>

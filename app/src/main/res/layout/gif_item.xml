@@ -8,12 +8,10 @@
             android:id="@+id/gif_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="3dp"
-            app:cardUseCompatPadding="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp">
+            app:cardCornerRadius="@dimen/threeDP"
+            android:layout_margin="@dimen/zeroDP"
+            app:cardElevation="@dimen/threeDP"
+            app:cardUseCompatPadding="true">
         <ImageView
                 android:src="@drawable/placeholder"
                 android:id="@+id/gif_image"
