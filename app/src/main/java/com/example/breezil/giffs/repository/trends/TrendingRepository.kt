@@ -1,4 +1,4 @@
-package com.example.breezil.giffs.repository
+package com.example.breezil.giffs.repository.trends
 
 
 import androidx.lifecycle.LiveData
@@ -25,7 +25,7 @@ internal constructor(private val gifApi: GifApi) {
 
             gifApi.getTrending(apikey, limit).enqueue(object : Callback<GifResult> {
                 override fun onResponse(call: Call<GifResult>, response: Response<GifResult>) {
-                    gifs!!.setValue(response.body()!!.data)
+                    gifs!!.value = response.body()!!.data
                 }
 
                 override fun onFailure(call: Call<GifResult>, t: Throwable) {

@@ -1,4 +1,4 @@
-package com.example.breezil.giffs.repository
+package com.example.breezil.giffs.repository.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData

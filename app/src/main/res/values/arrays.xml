@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="search_list">
+        <item>@string/animals</item>
+        <item>@string/happy</item>
+        <item>@string/sad</item>
+        <item>@string/dancing</item>
+        <item>@string/sleep</item>
+        <item>@string/crying</item>
+        <item>@string/food</item>
+        <item>@string/sports</item>
+        <item>@string/feelings</item>
+        <item>@string/animals</item>
+    </array>
+</resources>

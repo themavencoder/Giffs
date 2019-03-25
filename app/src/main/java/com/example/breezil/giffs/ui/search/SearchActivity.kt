@@ -7,14 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.example.breezil.giffs.BuildConfig.API_KEY
 import com.example.breezil.giffs.R
 import com.example.breezil.giffs.callbacks.GifClickListener
 import com.example.breezil.giffs.databinding.ActivitySearchBinding
 import com.example.breezil.giffs.model.Gif
+import com.example.breezil.giffs.ui.adapter.GifPagedRecyclerViewAdapter
 import com.example.breezil.giffs.ui.bottom_sheet.ActionBottomSheetFragment
 import com.example.breezil.giffs.ui.preference.PreferenceActivity
-import com.example.breezil.giffs.ui.adapter.GifRecyclerViewAdapter
 import com.example.breezil.giffs.ui.saved.SavedActivity
 import com.example.breezil.giffs.ui.trending.MainActivity
 import com.example.breezil.giffs.utils.BottomNavigationHelper
@@ -27,7 +26,7 @@ class SearchActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySearchBinding
 
-    internal var gifAdapter: GifRecyclerViewAdapter? = null
+    internal var gifAdapter: GifPagedRecyclerViewAdapter? = null
 
     lateinit var viewModel : SearchViewModel
 
@@ -65,7 +64,7 @@ class SearchActivity : AppCompatActivity() {
             }
 
         }
-        gifAdapter = GifRecyclerViewAdapter(this, gifClickListener)
+        gifAdapter = GifPagedRecyclerViewAdapter(this, gifClickListener)
         binding.searchList.adapter = gifAdapter
 
     }
@@ -75,9 +74,17 @@ class SearchActivity : AppCompatActivity() {
 
 
 
-        viewModel.getSearch(API_KEY,"ronaldo",24).observe(this, Observer { gifs ->
+        viewModel.getSearchList().observe(this, Observer {
+            gifAdapter?.submitList(it)
+        })
+    }
+
+    private fun referesh(search : String){
+        viewModel.setParameter(search)
+        viewModel.refreshGifs().observe(this, Observer { gifs ->
             gifAdapter?.submitList(gifs)
         })
+
     }
 
 
@@ -113,4 +120,6 @@ class SearchActivity : AppCompatActivity() {
             false
         }
     }
+
+
 }

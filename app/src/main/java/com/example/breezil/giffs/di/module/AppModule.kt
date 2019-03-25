@@ -11,7 +11,8 @@ import javax.inject.Singleton
 
 import com.example.breezil.giffs.BuildConfig.BASE_URL
 import com.example.breezil.giffs.api.OkHttp
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import io.reactivex.disposables.CompositeDisposable
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
@@ -22,9 +23,14 @@ class AppModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttp.getClient())
             .build()
             .create(GifApi::class.java)
+    }
+
+    @Provides
+    internal fun provideCompositeDisposable(): CompositeDisposable {
+        return CompositeDisposable()
     }
 }

@@ -107,7 +107,9 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     //Paging Library
-    implementation "android.arch.paging:runtime:$paging_version"
+//    implementation "android.arch.paging:runtime:$paging_version"
+//    implementation "android.arch.paging:paging-runtime-ktx:$paging_version_kx"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version_kx"
 
     // Kodein
     implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"

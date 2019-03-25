@@ -27,4 +27,18 @@
     <string name="delete_all">Delete All</string>
     <string name="trending">Trending</string>
     <string name="saved">Saved</string>
+
+
+    <!-- quick search -->
+    <string name="music">music</string>
+    <string name="happy">happy</string>
+    <string name="sad">sad</string>
+    <string name="dancing">dancing</string>
+    <string name="dab">dab</string>
+    <string name="sleep">sleeping</string>
+    <string name="crying">crying</string>
+    <string name="food">food</string>
+    <string name="sports">sports</string>
+    <string name="feelings">feelings</string>
+    <string name="animals">animals</string>
 </resources>

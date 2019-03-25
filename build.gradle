@@ -14,6 +14,7 @@ buildscript {
     ext.rxjava_adapter = '2.4.0'
     ext.timber_version = '4.7.1'
     ext.paging_version = '1.0.1'
+    ext.paging_version_kx = '2.1.0'
 
     repositories {
         google()
