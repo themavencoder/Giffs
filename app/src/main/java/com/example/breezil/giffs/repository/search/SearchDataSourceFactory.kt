@@ -7,21 +7,21 @@ import com.example.breezil.giffs.model.Gif
 
 class SearchDataSourceFactory @Inject
 constructor(
-    private val dataSource: SearchDataSource,
-    private val giffsDataSourceMutableLiveData: MutableLiveData<SearchDataSource>
+    private val dataSource: SearchDataSource
 ) : DataSource.Factory<Int, Gif>(){
 
-    val gifDataSources: MutableLiveData<SearchDataSource> = MutableLiveData()
+
+    val gifsDataSourceMutableLiveData: MutableLiveData<SearchDataSource> = MutableLiveData()
 
     override fun create(): DataSource<Int, Gif> {
-        gifDataSources.postValue(dataSource)
+        gifsDataSourceMutableLiveData.postValue(dataSource)
 
 
         return dataSource
     }
 
     fun getMutableGifDataSources(): MutableLiveData<SearchDataSource> {
-        return giffsDataSourceMutableLiveData
+        return gifsDataSourceMutableLiveData
     }
 
     fun getDataSource(): SearchDataSource {

@@ -79,7 +79,7 @@ class SearchDataSource @Inject constructor(
         networkState.postValue(NetworkState.LOADING)
 
         val modelList = ArrayList<Gif>()
-        val result = api.getSearchsAfter(API_KEY,"ronaldo",params.requestedLoadSize, params.key)
+        val result = api.getSearchsAfter(API_KEY,getSearch(),params.requestedLoadSize, params.key)
             .subscribe({ response ->
                 onPaginationSuccess(
                     response,

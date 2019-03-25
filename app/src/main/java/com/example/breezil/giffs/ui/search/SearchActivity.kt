@@ -3,15 +3,19 @@ package com.example.breezil.giffs.ui.search
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.breezil.giffs.R
 import com.example.breezil.giffs.callbacks.GifClickListener
+import com.example.breezil.giffs.callbacks.QuickSearchListener
 import com.example.breezil.giffs.databinding.ActivitySearchBinding
 import com.example.breezil.giffs.model.Gif
 import com.example.breezil.giffs.ui.adapter.GifPagedRecyclerViewAdapter
+import com.example.breezil.giffs.ui.adapter.QuickSearchRecyclerListAdapter
 import com.example.breezil.giffs.ui.bottom_sheet.ActionBottomSheetFragment
 import com.example.breezil.giffs.ui.preference.PreferenceActivity
 import com.example.breezil.giffs.ui.saved.SavedActivity
@@ -20,6 +24,7 @@ import com.example.breezil.giffs.utils.BottomNavigationHelper
 import dagger.android.AndroidInjection
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity() {
@@ -33,6 +38,10 @@ class SearchActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     internal var actionBottomSheetFragment = ActionBottomSheetFragment()
+
+    lateinit var quickSearchList: List<String>
+    lateinit var quickSearchRecyclerListAdapter: QuickSearchRecyclerListAdapter
+    var searchText: String = "happy"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +63,12 @@ class SearchActivity : AppCompatActivity() {
         logging.redactHeader(getString(R.string.cookie))
 
 
+        search()
+
+
     }
+
+
 
     private fun setUpAdapter(){
 
@@ -64,28 +78,74 @@ class SearchActivity : AppCompatActivity() {
             }
 
         }
+
+        val quickSearchListener = object : QuickSearchListener{
+            override fun getString(string: String) {
+                binding.searchView.setQuery(string, true)
+                refresh(string)
+            }
+        }
+
         gifAdapter = GifPagedRecyclerViewAdapter(this, gifClickListener)
         binding.searchList.adapter = gifAdapter
 
+        val textArray = resources.getStringArray(R.array.search_list)
+
+        quickSearchList = Arrays.asList(*textArray)
+
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        quickSearchRecyclerListAdapter = QuickSearchRecyclerListAdapter(quickSearchList, quickSearchListener)
+        binding.quickChooseList.layoutManager = layoutManager
+        binding.quickChooseList.adapter = quickSearchRecyclerListAdapter
+        Collections.shuffle(quickSearchList)
+        quickSearchRecyclerListAdapter.setList(quickSearchList)
+
     }
+
+
 
     private fun setUpViewModel(){
         viewModel = ViewModelProviders.of(this,viewModelFactory).get(SearchViewModel::class.java)
 
-
+        if(searchText!!.isEmpty()){
+            viewModel.setParameter("happy")
+        }else{
+            viewModel.setParameter(searchText!!)
+        }
 
         viewModel.getSearchList().observe(this, Observer {
             gifAdapter?.submitList(it)
         })
     }
 
-    private fun referesh(search : String){
+    private fun search() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    refresh(query)
+                    searchText = query
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    refresh(newText)
+                }
+                return true
+            }
+        })
+
+    }
+
+    private fun refresh(search : String){
         viewModel.setParameter(search)
         viewModel.refreshGifs().observe(this, Observer { gifs ->
             gifAdapter?.submitList(gifs)
         })
 
     }
+
 
 
     private fun setUpBottomNavigation(){

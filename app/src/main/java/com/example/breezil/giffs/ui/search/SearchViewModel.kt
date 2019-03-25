@@ -73,17 +73,17 @@ constructor(searchDataSourceFactory: SearchDataSourceFactory, application: Appli
     }
 
     fun retry(){
-        searchDataSourceFactory!!.gifDataSources.value!!.retry()
+        searchDataSourceFactory!!.gifsDataSourceMutableLiveData.value!!.retry()
     }
     fun referesh(){
-        searchDataSourceFactory!!.gifDataSources.value!!.invalidate()
+        searchDataSourceFactory!!.gifsDataSourceMutableLiveData.value!!.invalidate()
     }
     fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap<SearchDataSource, NetworkState>(
-        searchDataSourceFactory!!.gifDataSources
+        searchDataSourceFactory!!.gifsDataSourceMutableLiveData
     ) {it.networkState}
 
     fun getRefereshState(): LiveData<NetworkState> = Transformations.switchMap<SearchDataSource, NetworkState>(
-        searchDataSourceFactory!!.gifDataSources
+        searchDataSourceFactory!!.gifsDataSourceMutableLiveData
     ) { it.initialLoad }
 
     override fun onCleared() {
