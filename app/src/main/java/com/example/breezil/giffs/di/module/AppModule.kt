@@ -33,4 +33,10 @@ class AppModule {
     internal fun provideCompositeDisposable(): CompositeDisposable {
         return CompositeDisposable()
     }
+
+
+    @Provides
+    fun provideSearchString() : String{
+        return String()
+    }
 }

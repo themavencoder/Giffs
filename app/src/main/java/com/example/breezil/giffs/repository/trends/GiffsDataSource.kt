@@ -4,6 +4,7 @@ package com.example.breezil.giffs.repository.trends
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.example.breezil.giffs.BuildConfig.API_KEY
+import com.example.breezil.giffs.api.EndpointRepository
 import com.example.breezil.giffs.api.GifApi
 import com.example.breezil.giffs.model.Gif
 import com.example.breezil.giffs.model.GifResult
@@ -14,6 +15,7 @@ import com.example.breezil.giffs.utils.Constant.Companion.ZERO
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 
@@ -34,19 +36,19 @@ class GiffsDataSource @Inject constructor(
     val networkState = MutableLiveData<NetworkState>()
 
     val initialLoad = MutableLiveData<NetworkState>()
-    /**
-     * Keep Completable reference for the retry event
-     */
-    private var retryCompletable: Completable? = null
-
-    fun retry() {
-        if (retryCompletable != null) {
-            compositeDisposable.add(retryCompletable!!
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ }, { throwable -> Timber.e(throwable) }))
-        }
-    }
+//    /**
+//     * Keep Completable reference for the retry event
+//     */
+//    private var retryCompletable: Completable? = null
+//
+//    fun retry() {
+//        if (retryCompletable != null) {
+//            compositeDisposable.add(retryCompletable!!
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ }, { throwable -> Timber.e(throwable) }))
+//        }
+//    }
 
     override fun loadInitial(params: LoadInitialParams<Int>,
                              callback: LoadInitialCallback<Int, Gif>) {
@@ -56,9 +58,10 @@ class GiffsDataSource @Inject constructor(
         // very first list is loaded.
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
+        val result : Disposable
 
         val modelList = ArrayList<Gif>()
-        val result = api.getTrendAfter(API_KEY, params.requestedLoadSize, ONE)
+        result = api.getTrendAfter(API_KEY, params.requestedLoadSize, ONE)
             .subscribe({ response ->
                 onInitialSuccess(
                     response,
@@ -74,9 +77,10 @@ class GiffsDataSource @Inject constructor(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Gif>) {
         // set network value to loading.
         networkState.postValue(NetworkState.LOADING)
+        val result : Disposable
 
         val modelList = ArrayList<Gif>()
-        val result = api.getTrendAfter(API_KEY,params.requestedLoadSize, params.key)
+        result = api.getTrendAfter(API_KEY,params.requestedLoadSize, params.key)
             .subscribe({ response ->
                 onPaginationSuccess(
                     response,
@@ -99,13 +103,13 @@ class GiffsDataSource @Inject constructor(
 
 
 
-    private fun setRetry(action: Action?) {
-        if (action == null) {
-            this.retryCompletable = null
-        } else {
-            this.retryCompletable = Completable.fromAction(action)
-        }
-    }
+//    private fun setRetry(action: Action?) {
+//        if (action == null) {
+//            this.retryCompletable = null
+//        } else {
+//            this.retryCompletable = Completable.fromAction(action)
+//        }
+//    }
 
     override fun onInitialError(throwable: Throwable) {
         initialLoad.postValue(NetworkState(NetworkState.Status.FAILED))

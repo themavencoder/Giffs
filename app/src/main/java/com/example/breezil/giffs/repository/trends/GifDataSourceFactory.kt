@@ -28,6 +28,18 @@ import javax.inject.Inject
 //
 //}
 
+//class GifDataSourceFactory @Inject
+//constructor(private val dataSource: GiffsDataSource) : DataSource.Factory<Int, Gif>() {
+//    val gifDataSources: MutableLiveData<GiffsDataSource> = MutableLiveData()
+//
+//    override fun create(): DataSource<Int, Gif> {
+//        gifDataSources.postValue(dataSource)
+//
+//
+//        return dataSource
+//    }
+//}
+
 class GifDataSourceFactory @Inject
 constructor(private val dataSource: GiffsDataSource) : DataSource.Factory<Int, Gif>() {
     val gifDataSources: MutableLiveData<GiffsDataSource> = MutableLiveData()

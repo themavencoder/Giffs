@@ -10,24 +10,16 @@ import com.example.breezil.giffs.model.Gif
 import com.example.breezil.giffs.repository.trends.GifDataSourceFactory
 import com.example.breezil.giffs.repository.trends.GiffsDataSource
 import com.example.breezil.giffs.repository.NetworkState
+import com.example.breezil.giffs.utils.AppExecutors
 import io.reactivex.disposables.CompositeDisposable
 
 import javax.inject.Inject
 
-//class MainViewModel @Inject
-//constructor(private val trendingRepository: TrendingRepository, application: Application) :
-//    AndroidViewModel(application) {
-//
-//    private var gifList: LiveData<List<Gif>>? = null
-//
-//    fun getTrending(apikey: String, limit: Int): LiveData<List<Gif>> {
-//        if (gifList == null) {
-//            gifList = trendingRepository.getTrending(apikey, limit)
-//        }
-//        return gifList as LiveData<List<Gif>>
-//    }
-//}
-class MainViewModel @Inject constructor(sourceFactory: GifDataSourceFactory, application: Application):
+
+class MainViewModel @Inject constructor(
+    sourceFactory: GifDataSourceFactory,
+    val appExecutors: AppExecutors,
+    application: Application):
     AndroidViewModel(application){
     var gifList: LiveData<PagedList<Gif>>
 
@@ -45,21 +37,44 @@ class MainViewModel @Inject constructor(sourceFactory: GifDataSourceFactory, app
             .setEnablePlaceholders(true)
             .setPrefetchDistance(pageSize)
             .build()
-        gifList = LivePagedListBuilder<Int,Gif>(sourceFactory, config).build()
+        gifList = LivePagedListBuilder<Int,Gif>(sourceFactory, config)
+            .setFetchExecutor(appExecutors.networkIO())
+            .build()
     }
-    fun retry(){
-        sourceFactory!!.gifDataSources.value!!.retry()
-    }
-    fun referesh(){
-        sourceFactory!!.gifDataSources.value!!.invalidate()
-    }
-    fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap<GiffsDataSource, NetworkState>(
-        sourceFactory!!.gifDataSources
-    ) {it.networkState}
 
-    fun getRefereshState(): LiveData<NetworkState> = Transformations.switchMap<GiffsDataSource, NetworkState>(
-        sourceFactory!!.gifDataSources
-    ) { it.initialLoad }
+
+    fun getGifsList(): LiveData<PagedList<Gif>> {
+        return gifList
+    }
+
+    fun getRefereshGifs():LiveData<PagedList<Gif>>{
+        val config = PagedList.Config.Builder()
+            .setPageSize(pageSize)
+            .setInitialLoadSizeHint(pageSize)
+            .setEnablePlaceholders(true)
+            .setPrefetchDistance(pageSize)
+            .build()
+        gifList = LivePagedListBuilder<Int,Gif>(sourceFactory!!, config)
+            .setFetchExecutor(appExecutors.networkIO())
+            .build()
+
+        return gifList
+    }
+
+
+//    fun retry(){
+//        sourceFactory!!.gifDataSources.value!!.retry()
+//    }
+//    fun referesh(){
+//        sourceFactory!!.gifDataSources.value!!.invalidate()
+//    }
+//    fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap<GiffsDataSource, NetworkState>(
+//        sourceFactory!!.gifDataSources
+//    ) {it.networkState}
+//
+//    fun getRefereshState(): LiveData<NetworkState> = Transformations.switchMap<GiffsDataSource, NetworkState>(
+//        sourceFactory!!.gifDataSources
+//    ) { it.initialLoad }
 
     override fun onCleared() {
         super.onCleared()

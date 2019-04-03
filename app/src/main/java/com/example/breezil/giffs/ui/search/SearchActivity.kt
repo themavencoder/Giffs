@@ -37,6 +37,7 @@ class SearchActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     internal var actionBottomSheetFragment = ActionBottomSheetFragment()
 
     lateinit var quickSearchList: List<String>
@@ -107,10 +108,10 @@ class SearchActivity : AppCompatActivity() {
     private fun setUpViewModel(){
         viewModel = ViewModelProviders.of(this,viewModelFactory).get(SearchViewModel::class.java)
 
-        if(searchText!!.isEmpty()){
+        if(searchText.isEmpty()){
             viewModel.setParameter("happy")
         }else{
-            viewModel.setParameter(searchText!!)
+            viewModel.setParameter("happy")
         }
 
         viewModel.getSearchList().observe(this, Observer {
@@ -135,7 +136,6 @@ class SearchActivity : AppCompatActivity() {
                 return true
             }
         })
-
     }
 
     private fun refresh(search : String){

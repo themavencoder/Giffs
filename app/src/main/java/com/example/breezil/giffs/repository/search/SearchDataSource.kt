@@ -12,6 +12,7 @@ import com.example.breezil.giffs.utils.Constant
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -30,21 +31,21 @@ class SearchDataSource @Inject constructor(
 
     val initialLoad = MutableLiveData<NetworkState>()
 
-    private lateinit var mSearch: String
+    var mSearch: String = ""
 
-    /**
-     * Keep Completable reference for the retry event
-     */
-    private var retryCompletable: Completable? = null
-
-    fun retry() {
-        if (retryCompletable != null) {
-            compositeDisposable.add(retryCompletable!!
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ }, { throwable -> Timber.e(throwable) }))
-        }
-    }
+//    /**
+//     * Keep Completable reference for the retry event
+//     */
+//    private var retryCompletable: Completable? = null
+//
+//    fun retry() {
+//        if (retryCompletable != null) {
+//            compositeDisposable.add(retryCompletable!!
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ }, { throwable -> Timber.e(throwable) }))
+//        }
+//    }
 
     fun setSearch(search: String) {
         mSearch = search
@@ -54,6 +55,8 @@ class SearchDataSource @Inject constructor(
         return mSearch
     }
 
+
+
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Gif>) {
         // update network states.
         // we also provide an initial load state to the listeners so that the UI can know when the
@@ -61,8 +64,10 @@ class SearchDataSource @Inject constructor(
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
 
+        val result : Disposable
+
         val modelList = ArrayList<Gif>()
-        val result = api.getSearchs(API_KEY,getSearch() ,params.requestedLoadSize)
+        result = api.getSearchs(API_KEY,getSearch() ,params.requestedLoadSize)
             .subscribe({ response ->
                 onInitialSuccess(
                     response,
@@ -77,9 +82,10 @@ class SearchDataSource @Inject constructor(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Gif>) {
         // set network value to loading.
         networkState.postValue(NetworkState.LOADING)
+        val result : Disposable
 
         val modelList = ArrayList<Gif>()
-        val result = api.getSearchsAfter(API_KEY,getSearch(),params.requestedLoadSize, params.key)
+        result = api.getSearchsAfter(API_KEY,getSearch(),params.requestedLoadSize, params.key)
             .subscribe({ response ->
                 onPaginationSuccess(
                     response,
@@ -98,13 +104,13 @@ class SearchDataSource @Inject constructor(
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Gif>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-    private fun setRetry(action: Action?) {
-        if (action == null) {
-            this.retryCompletable = null
-        } else {
-            this.retryCompletable = Completable.fromAction(action)
-        }
-    }
+//    private fun setRetry(action: Action?) {
+//        if (action == null) {
+//            this.retryCompletable = null
+//        } else {
+//            this.retryCompletable = Completable.fromAction(action)
+//        }
+//    }
 
     override fun onInitialError(throwable: Throwable) {
         initialLoad.postValue(NetworkState(NetworkState.Status.FAILED))
