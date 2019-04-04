@@ -70,7 +70,6 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-
 //    implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
@@ -82,7 +81,6 @@ dependencies {
 
     // Gson
     implementation "com.google.code.gson:gson:2.8.5"
-
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -105,17 +103,21 @@ dependencies {
 //    implementation "android.arch.paging:paging-runtime-ktx:$paging_version_kx"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version_kx"
 
-
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
-
 
     // Preference
     implementation "androidx.preference:preference:1.0.0"
 
     // New Material Design
     implementation "com.google.android.material:material:1.0.0"
+
+    //About
+    implementation "com.github.medyo:android-about-page:$aboutPage"
+    implementation("com.mikepenz:aboutlibraries:$aboutLibraries") {
+        transitive = true
+    }
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

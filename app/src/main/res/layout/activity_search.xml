@@ -9,9 +9,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/backgroundcolor"
             >
         <androidx.appcompat.widget.SearchView
-                android:background="@color/colorPrimary"
+                android:background="?attr/actionbarcolor"
                 android:id="@+id/searchView"
                 android:theme="@style/AppTheme.AppBarOverlay"
                 android:layout_width="0dp"
@@ -57,7 +58,6 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavViewBar"
-                android:background="@color/light"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:menu="@menu/bottomnavigationmenu"
@@ -65,6 +65,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:labelVisibilityMode="labeled"
+                app:itemTextColor="@drawable/item_color"
+                app:itemIconTint="@drawable/item_color"
+                android:background="?attr/backgroundcolor"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -15,18 +17,18 @@ import com.example.breezil.giffs.R
 import com.example.breezil.giffs.callbacks.SavedGifClickListener
 import com.example.breezil.giffs.databinding.ActivitySavedBinding
 import com.example.breezil.giffs.model.SavedGif
-import com.example.breezil.giffs.ui.preference.PreferenceActivity
+import com.example.breezil.giffs.ui.BaseActivity
 import com.example.breezil.giffs.ui.bottom_sheet.SavedActionBottomSheetFragment
 import com.example.breezil.giffs.ui.search.SearchActivity
 import com.example.breezil.giffs.ui.adapter.SavedGifRecyclerAdapter
+import com.example.breezil.giffs.ui.preference.AboutActivity
+import com.example.breezil.giffs.ui.preference.PreferenceFragment
 import com.example.breezil.giffs.ui.trending.MainActivity
 import com.example.breezil.giffs.utils.BottomNavigationHelper
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_saved.*
-import java.security.AccessController.getContext
 import javax.inject.Inject
 
-class SavedActivity : AppCompatActivity() {
+class SavedActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -112,15 +114,42 @@ class SavedActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.saved -> {}
-                R.id.preference -> {
-                    startActivity(Intent(this@SavedActivity, PreferenceActivity::class.java))
-                    finish()
-                }
+
             }
 
 
             false
         }
+    }
+
+    //Creating the option menu
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        //set the menu layout
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    //Option menu selected
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        //if logout item is selected
+
+
+        if (item.itemId == R.id.preference) {
+            preference()
+
+        }
+        if (item.itemId == R.id.about) {
+            startActivity(Intent(this@SavedActivity, AboutActivity::class.java))
+        }
+
+
+        return true
+    }
+    fun preference(){
+        val preferenceFragment = PreferenceFragment()
+        preferenceFragment.show(supportFragmentManager, "show")
     }
 
     private fun showDeleteAllDialog() {

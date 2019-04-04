@@ -1,8 +1,13 @@
 package com.example.breezil.giffs.ui.search
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -14,10 +19,11 @@ import com.example.breezil.giffs.callbacks.GifClickListener
 import com.example.breezil.giffs.callbacks.QuickSearchListener
 import com.example.breezil.giffs.databinding.ActivitySearchBinding
 import com.example.breezil.giffs.model.Gif
+import com.example.breezil.giffs.ui.BaseActivity
 import com.example.breezil.giffs.ui.adapter.GifPagedRecyclerViewAdapter
 import com.example.breezil.giffs.ui.adapter.QuickSearchRecyclerListAdapter
 import com.example.breezil.giffs.ui.bottom_sheet.ActionBottomSheetFragment
-import com.example.breezil.giffs.ui.preference.PreferenceActivity
+import com.example.breezil.giffs.ui.preference.PreferenceFragment
 import com.example.breezil.giffs.ui.saved.SavedActivity
 import com.example.breezil.giffs.ui.trending.MainActivity
 import com.example.breezil.giffs.utils.BottomNavigationHelper
@@ -27,7 +33,7 @@ import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : BaseActivity() {
 
     lateinit var binding : ActivitySearchBinding
 
@@ -44,9 +50,23 @@ class SearchActivity : AppCompatActivity() {
     lateinit var quickSearchRecyclerListAdapter: QuickSearchRecyclerListAdapter
     var searchText: String = "happy"
 
+    internal var theme : Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPrefs : SharedPreferences =this@SearchActivity.getSharedPreferences(getString(R.string.PACKAGE_NAME),
+            Context.MODE_PRIVATE
+        )
+
+        theme = sharedPrefs.getBoolean(getString(R.string.theme_state), false)
+        if (theme) {
+            setTheme(R.style.DarkNoActionTheme)
+        } else {
+            setTheme(R.style.AppNoActionTheme)
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
 
         AndroidInjection.inject(this)
@@ -148,6 +168,9 @@ class SearchActivity : AppCompatActivity() {
 
 
 
+
+
+
     private fun setUpBottomNavigation(){
         BottomNavigationHelper.disableShiftMode(binding.bottomNavViewBar)
 
@@ -170,16 +193,17 @@ class SearchActivity : AppCompatActivity() {
                     startActivity(Intent(this@SearchActivity, SavedActivity::class.java))
                     finish()
                 }
-                R.id.preference -> {
-                    startActivity(Intent(this@SearchActivity, PreferenceActivity::class.java))
-                    finish()
-                }
+
             }
 
 
             false
         }
     }
+
+
+
+
 
 
 }

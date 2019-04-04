@@ -27,6 +27,11 @@
     <string name="delete_all">Delete All</string>
     <string name="trending">Trending</string>
     <string name="saved">Saved</string>
+    <string name="permission_denied">Permission DENIED</string>
+
+    <string name="cant_save_until_gif_displayed">Can\'t save, until gif is displayed</string>
+    <string name="cant_download_until_gif_is_loaded">Can\'t Download, Until gif is loaded</string>
+    <string name="cant_share_until_gif_is_loaded">Can\'t Share, Until gif is Loaded</string>
 
 
     <!-- quick search -->
@@ -41,4 +46,37 @@
     <string name="sports">sports</string>
     <string name="feelings">feelings</string>
     <string name="animals">animals</string>
+    <string name="search">Search</string>
+    <string name="preference">Preference</string>
+    <string name="about">About</string>
+
+    <string name="about_description">Pixxo: Explore, Edit and Share Photos.\n\n Pixxo let you explore pictures, edit, write over them and share. Capture a moment and make it beautiful or explore pictures online and make them beautiful with Pixxo and Share with friends and family on your favorite social networks! \n\n Made with love by Kola Emiola and Api by https://pixabay.com </string>
+
+
+
+    <string name="contacts">Contact</string>
+    <string name="email">kolajubril@gmail.com</string>
+    <string name="email_title">Email</string>
+    <string name="web">http://www.kolaemiola.xyz/</string>
+    <string name="website">My Website</string>
+    <string name="github">breel93</string>
+    <string name="ongithub">github</string>
+    <string name="twitter">kola_emi</string>
+    <string name="ontwitter">twitter</string>
+    <string name="open_source_libs">Open Source Libraries</string>
+    <string name="version">Version: 1.0</string>
+    <string name="copy_right">Copyrights © %1$d</string>
+    <string name="widget">Add Widget</string>
+    <string name="library_text">Libraries</string>
+    <string name="theme">Theme</string>
+    <string name="themes">Themes</string>
+    <string name="night_mode_disable">Night Mode Disable</string>
+    <string name="close">Close</string>
+    <string name="PACKAGE_NAME">com.example.kola</string>
+    <string name="theme_state">ThemeState</string>
+    <string name="night_mode_enabled">Night Mode Enabled</string>
+    <string name="download">Download</string>
+    <string name="delete">Delete</string>
+    <string name="share">Share</string>
+    <string name="save">Save</string>
 </resources>

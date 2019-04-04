@@ -7,10 +7,11 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorSmokeWhite">#F5F5F5</color>
     <color name="colorblue">#1E90FF</color>
-    <color name="colorGrey">#c3c3c3</color>
+    <color name="colorGrey">#9E9E9E</color>
     <color name="colorSeashell">#FFF5EE</color>
     <color name="hotPink">#ff69b4</color>
     <color name="oldlace">#FDF5E6</color>
+    <color name="textItemColor">#808080</color>
     <color name="blue">#345bdb</color>
     <color name="dark">#212121</color>
     <color name="black">#000000</color>

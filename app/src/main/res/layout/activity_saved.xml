@@ -7,6 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/backgroundcolor"
     >
         <TextView
                 android:id="@+id/savedEmpty"
@@ -63,7 +64,6 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavViewBar"
-                android:background="@color/light"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:menu="@menu/bottomnavigationmenu"
@@ -71,6 +71,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:labelVisibilityMode="labeled"
+                app:itemTextColor="@drawable/item_color"
+                app:itemIconTint="@drawable/item_color"
+                android:background="?attr/backgroundcolor"
+
         />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

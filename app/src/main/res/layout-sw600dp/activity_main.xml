@@ -5,37 +5,46 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/backgroundcolor"
             tools:context=".ui.trending.MainActivity">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mainGifList"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/gif_item"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toTopOf="@+id/bottomNavViewBar"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:spanCount="3"
-        />
+                android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mainGifList"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:listitem="@layout/gif_item"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="8dp"
+                    app:spanCount="3"
+            />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavViewBar"
-            android:background="@color/light"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:menu="@menu/bottomnavigationmenu"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:labelVisibilityMode="labeled"
+                android:id="@+id/bottomNavViewBar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:menu="@menu/bottomnavigationmenu"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:labelVisibilityMode="labeled"
+                app:itemTextColor="@drawable/item_color"
+                app:itemIconTint="@drawable/item_color"
+                android:background="?attr/backgroundcolor"
         />
 
 

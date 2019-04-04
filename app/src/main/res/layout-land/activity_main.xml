@@ -4,13 +4,21 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundcolor"
+        tools:context=".ui.trending.MainActivity">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.trending.MainActivity">
-
-
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavViewBar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone">
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mainGifList"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -18,17 +26,15 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/bottomNavViewBar"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:spanCount="3"
         />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavViewBar"
-            android:background="@color/light"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:menu="@menu/bottomnavigationmenu"
@@ -36,9 +42,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:labelVisibilityMode="labeled"
-        />
+            app:itemTextColor="@drawable/item_color"
+            app:itemIconTint="@drawable/item_color"
+            android:background="?attr/backgroundcolor"
+    />
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
