@@ -46,7 +46,59 @@
     <string name="sports">sports</string>
     <string name="feelings">feelings</string>
     <string name="animals">animals</string>
+    <string name="thumbs_up">thumbs up</string>
+    <string name="want">want</string>
+    <string name="win">win</string>
+    <string name="YOLO">YOLO</string>
+    <string name="wink">wink</string>
+    <string name="yawn">yawn</string>
+    <string name="yes_gif">yes</string>
+    <string name="you_got_this">you got this</string>
+    <string name="shrug">shrug</string>
+    <string name="sigh">sigh</string>
+    <string name="slow_clap">slow clap</string>
+    <string name="sorry">sorry</string>
+    <string name="thank_you">thank you</string>
+    <string name="thumbs_down">thumbs down</string>
+    <string name="please">please</string>
+    <string name="popcorn">popcorn</string>
+    <string name="SMH">SMH</string>
+    <string name="scared">scared</string>
+    <string name="seriously">seriously</string>
+    <string name="shocked">shocked</string>
+    <string name="mic_drop">mic drop</string>
+    <string name="no_gif">no</string>
+    <string name="OMG">OMG</string>
+    <string name="oh_snap">oh snap</string>
+    <string name="ok">OK</string>
+    <string name="oops">oops</string>
+    <string name="goodbye">goodbye</string>
+    <string name="good_luck">good luck</string>
+    <string name="happy_dance">happy dance</string>
+    <string name="hearts">hearts</string>
+    <string name="high_five">high five</string>
+    <string name="hug">hug</string>
+    <string name="IDK">IDK</string>
+    <string name="kiss">kiss</string>
+    <string name="deal_with_it">deal with it</string>
+    <string name="do_not_want">do not want</string>
+    <string name="awww">awww</string>
+    <string name="dance">dance</string>
+    <string name="eww">eww</string>
+    <string name="eye_roll">eye roll</string>
+    <string name="face_palm">face palm</string>
+    <string name="applause">applause</string>
+    <string name="agree">agree</string>
+
+
+
+
+
     <string name="search">Search</string>
+
+
+
+
     <string name="preference">Preference</string>
     <string name="about">About</string>
 

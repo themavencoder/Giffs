@@ -10,6 +10,48 @@
         <item>@string/food</item>
         <item>@string/sports</item>
         <item>@string/feelings</item>
-        <item>@string/animals</item>
+        <item>@string/thumbs_up</item>
+        <item>@string/want</item>
+        <item>@string/win</item>
+        <item>@string/YOLO</item>
+        <item>@string/wink</item>
+        <item>@string/yawn</item>
+        <item>@string/yes_gif</item>
+        <item>@string/you_got_this</item>
+        <item>@string/shrug</item>
+        <item>@string/sigh</item>
+        <item>@string/slow_clap</item>
+        <item>@string/sorry</item>
+        <item>@string/thank_you</item>
+        <item>@string/thumbs_down</item>
+        <item>@string/please</item>
+        <item>@string/popcorn</item>
+        <item>@string/SMH</item>
+        <item>@string/scared</item>
+        <item>@string/seriously</item>
+        <item>@string/shocked</item>
+        <item>@string/mic_drop</item>
+        <item>@string/no_gif</item>
+        <item>@string/OMG</item>
+        <item>@string/oh_snap</item>
+        <item>@string/ok</item>
+        <item>@string/oops</item>
+        <item>@string/goodbye</item>
+        <item>@string/good_luck</item>
+        <item>@string/happy_dance</item>
+        <item>@string/hearts</item>
+        <item>@string/high_five</item>
+        <item>@string/hug</item>
+        <item>@string/IDK</item>
+        <item>@string/kiss</item>
+        <item>@string/deal_with_it</item>
+        <item>@string/do_not_want</item>
+        <item>@string/awww</item>
+        <item>@string/dance</item>
+        <item>@string/eww</item>
+        <item>@string/eye_roll</item>
+        <item>@string/face_palm</item>
+        <item>@string/applause</item>
+        <item>@string/agree</item>
     </array>
 </resources>

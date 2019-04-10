@@ -6,7 +6,7 @@
         android:id="@+id/searchLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/eightDP"
+        app:cardCornerRadius="@dimen/threeDP"
         android:layout_margin="@dimen/fiveDP"
         android:elevation="@dimen/threeDP"
         android:padding="@dimen/twoDP">
@@ -14,6 +14,7 @@
             android:id="@+id/searchText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
             tools:text="something"
             android:textColor="@color/black"
             android:layout_margin="@dimen/threeDP"/>

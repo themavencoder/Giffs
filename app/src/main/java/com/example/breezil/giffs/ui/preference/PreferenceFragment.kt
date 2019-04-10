@@ -11,15 +11,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 
 import com.example.breezil.giffs.R
 import com.example.breezil.giffs.databinding.FragmentPreferenceBinding
-import com.example.breezil.giffs.ui.trending.MainActivity
-
 import android.os.Handler
 
 
